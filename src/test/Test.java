@@ -14,6 +14,7 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 
 public class Test {
@@ -65,9 +66,9 @@ public class Test {
 			keyois.close();
 		}
 		
-		IvParameterSpec ivParameterSpec = new IvParameterSpec(iv); // is the same iv
+		GCMParameterSpec ivParameterSpec = new GCMParameterSpec(128, iv, 0, 12); // is the same iv
 		//cipher = Cipher.getInstance("AES/GCM/NoPadding");
-		cipher.init(Cipher.DECRYPT_MODE, (Key) secretKey);
+		cipher.init(Cipher.DECRYPT_MODE, (Key) secretKey, ivParameterSpec);
 		CipherInputStream cis = new CipherInputStream(fis, cipher);
 		
 		int byteRead = 0;
